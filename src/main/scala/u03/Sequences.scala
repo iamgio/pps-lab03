@@ -66,7 +66,13 @@ object Sequences: // Essentially, generic linkedlists
      * E.g., [10] => [10]
      * E.g., [] => []
      */
-    def reverse[A](s: Sequence[A]): Sequence[A] = ???
+    def reverse[A](s: Sequence[A]): Sequence[A] =
+      @tailrec
+      def _reverse(acc: Sequence[A], trail: Sequence[A]): Sequence[A] =
+        trail match
+          case Cons(h, t) => _reverse(Cons(h, acc), t)
+          case _ => acc
+      _reverse(Nil(), s)
 
     /*
      * Map the elements of the sequence to a new sequence and flatten the result
