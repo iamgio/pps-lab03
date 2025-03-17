@@ -91,9 +91,9 @@ object Sequences: // Essentially, generic linkedlists
      */
     def min(s: Sequence[Int]): Optional[Int] =
       @tailrec
-      def _min(s: Sequence[Int], min: Optional[Int]): Optional[Int] = (s, min) match
-        case (Cons(h, t), Optional.Empty()) => _min(t, Optional.Just(h))
-        case (Cons(h, t), Optional.Just(min)) if h < min => _min(t, Optional.Just(h))
+      def _min(s: Sequence[Int], min: Optional[Int]): Optional[Int] = s match
+        case Cons(h, t) if h <= Optional.orElse(min, h) => _min(t, Optional.Just(h))
+        case Cons(h, t) => _min(t, min)
         case _ => min
       _min(s, Optional.Empty())
 
